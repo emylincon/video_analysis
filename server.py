@@ -9,7 +9,7 @@ cap = cv2.VideoCapture(0)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('dashboard.html')
 
 
 def gen():
@@ -20,7 +20,7 @@ def gen():
         # Capture frame-by-frame
         ret, img = cap.read()
         if ret == True:
-            img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
+            img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             time.sleep(0.1)
@@ -36,7 +36,7 @@ def gen1():
         # Capture frame-by-frame
         ret, img = cap.read()
         if ret == True:
-            img = cv2.resize(img, (0, 0), fx=0.5, fy=0.5)
+            img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
             img = AnalyzeFrame().age_gender_detector(img)
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
