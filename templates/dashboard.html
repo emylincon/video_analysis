@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
+    <title>Stream</title>
+</head>
+<body>
+    <header>
+        <img class='logo'  src="{{ url_for('static', filename='images/logo.png') }}" alt='Logo'>
+
+        <nav>
+            <ul class='nav__links'>
+                <li class="active">CAM 1</li>
+                <li><a href="#">CAM 2</a></li>
+                <li><a href="#">CAM 3</a></li>
+            </ul>
+        </nav>
+
+
+    </header>
+
+    <div id='main'>
+        <div class="sub_main pad">
+            <div class="video">
+                <div class="sub_title">Original Stream</div>
+                    <img class="vid" src="{{ url_for('video_feed') }}">
+
+            </div>
+            <div class="video">
+                <div class="sub_title">Analysed Stream</div>
+                    <img class="vid" src="{{ url_for('video_analytics') }}">
+            </div>
+        </div>
+        <div class="sub_main">
+            <div id="advert">
+                <div class="sub_title">Advert Board</div>
+                <div id="loading">
+                    <div id="ring" class="ring">LOADING<div class='ringer'></div></div>
+                </div>
+
+            </div>
+            <div id="stat">
+                <div class="sub_title">Frame Statistics</div>
+                <div class="stat_board">
+                    <div class="sub_stat" id="stat_circle">
+                        <div id='time'></div>
+                        <div id="people">
+                            <span class="material-icons" id="p-face">
+                                face
+                                </span>
+                            <span id="p-no">1 Faces</span>
+                        </div>
+                    </div>
+                    <div class="sub_stat" id="stat_bar">
+                        <div class="bar">
+                            <div>
+                                <canvas id="gender" height="68"></canvas>
+                            </div>
+                        </div>
+                        <div class="bar">
+                            <div >
+                                <canvas id="age" height="68"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <img src="{{ url_for('static', filename='images/footer-img.jpeg') }}" id="face"/>
+        <br>
+        Designed by Emeka Ugwuanyi
+        <p>
+            <a href="https://github.com/emylincon"><i class="fa fa-github"></i></a>
+                  &nbsp;
+        <a href="https://www.linkedin.com/in/emeka-ugwuanyi-259089121/"><i class="fa fa-linkedin"></i></a>
+        </p>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
