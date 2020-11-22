@@ -49,6 +49,8 @@ class AnalyzeFrame:
         # Read frame
         t = time.time()
         frameFace, bboxes = self.getFaceBox(self.faceNet, frame)
+        display = {'gender': [0] * 2, 'age': [0] * 8}
+        faces = len(bboxes)
         for bbox in bboxes:
             # print(bbox)
             face = frame[max(0,bbox[1]-self.padding):min(bbox[3]+self.padding,frame.shape[0]-1),max(0,bbox[0]-self.padding):min(bbox[2]+self.padding, frame.shape[1]-1)]
@@ -56,14 +58,18 @@ class AnalyzeFrame:
             blob = cv.dnn.blobFromImage(face, 1.0, (227, 227), self.MODEL_MEAN_VALUES, swapRB=False)
             self.genderNet.setInput(blob)
             genderPreds = self.genderNet.forward()
-            gender = self.genderList[genderPreds[0].argmax()]
+            m_gender = genderPreds[0].argmax()
+            display['gender'][m_gender] += 1
+            gender = self.genderList[m_gender]
             self.ageNet.setInput(blob)
             agePreds = self.ageNet.forward()
-            age = self.ageList[agePreds[0].argmax()]
+            m_age = agePreds[0].argmax()
+            display['age'][m_age] += 1
+            age = self.ageList[m_age]
 
             label = "{},{}".format(gender, age)
             cv.putText(frameFace, label, (bbox[0], bbox[1]-10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2, cv.LINE_AA)
-        return frameFace
+        return frameFace, display, faces
 
 
 # AnalyzeFrame().age_gender_detector(frame)
