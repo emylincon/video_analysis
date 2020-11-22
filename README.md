@@ -1,3 +1,3 @@
 # Video Analytics Project for Smart Advertisement
 ## PROJECT UNDER CONSTRUCTION...
-* put ip camera on python and vlc => https://www.youtube.com/watch?v=6wI6tzRogZQ&ab_channel=YahiyaMulla
+* [put ip camera on python and vlc](https://www.youtube.com/watch?v=6wI6tzRogZQ&ab_channel=YahiyaMulla)
