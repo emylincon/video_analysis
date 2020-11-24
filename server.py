@@ -81,6 +81,27 @@ def add_data(male, female, infant, baby, child, teen, young, adult, middle, seni
     db.session.commit()
 
 
+class DataInput:
+    def __init__(self):
+        self.start = time.time()
+        self.compare = {}
+
+    def add(self, data):
+        data = tuple(data)
+        if data != (0,)*10:
+            if data in self.compare:
+                self.compare[data] += 1
+            else:
+                self.compare[data] = 0
+            if (time.time() - self.start) > 60:
+                add_data(*max(self.compare, key=self.compare.get))
+                self.start = time.time()
+                self.compare = {}
+
+
+data_input = DataInput()
+
+
 @app.route('/')
 def home():
     return render_template('dashboard.html')
@@ -113,7 +134,8 @@ def gen1():
         if ret == True:
             img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
             img, display, faces = AnalyzeFrame().age_gender_detector(img)
-            add_data(*display['gender']+display['age'])
+            # add_data(*display['gender']+display['age'])
+            data_input.add(display['gender']+display['age'])
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             time.sleep(0.1)
