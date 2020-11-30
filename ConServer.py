@@ -129,7 +129,7 @@ class FrameManager:
 
 
 frame_manager1 = FrameManager()
-frame_manager2 = FrameManager(no=8)
+frame_manager2 = FrameManager(no=15)
 
 
 def gen():
