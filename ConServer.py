@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 display = {'gender': [0] * 2, 'age': [0] * 8}
 faces = 0
-skip_frames = 0.5
+skip_frames = 0.1
 
 
 # database models
