@@ -110,8 +110,8 @@ def home():
 
 
 class FrameManager:
-    def __init__(self):
-        self.no_of_frames = 5
+    def __init__(self, no=5):
+        self.no_of_frames = no
         self.count = 0
 
     def add_count(self):
@@ -123,13 +123,13 @@ class FrameManager:
             self.count -= 50000
 
     def skip_frame(self):
-        if self.count % 5 == 0:
+        if self.count % self.no_of_frames == 0:
             return True
         return False
 
 
 frame_manager1 = FrameManager()
-frame_manager2 = FrameManager()
+frame_manager2 = FrameManager(no=8)
 
 
 def gen():
