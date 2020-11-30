@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 display = {'gender': [0] * 2, 'age': [0] * 8}
 faces = 0
+skip_frames = 0.5
 
 
 # database models
@@ -119,7 +120,7 @@ def gen():
             img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            time.sleep(0.1)
+            time.sleep(skip_frames)
         else:
             break
 
@@ -139,7 +140,7 @@ def gen1():
             data_input.add(display['gender']+display['age'])
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            time.sleep(0.1)
+            time.sleep(skip_frames)
         else:
             break
 
