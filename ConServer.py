@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 display = {'gender': [0] * 2, 'age': [0] * 8}
 faces = 0
-skip_frames = 0.1
+loop_time = 0.1
 
 
 # database models
@@ -109,18 +109,43 @@ def home():
     return render_template('dashboard.html')
 
 
+class FrameManager:
+    def __init__(self):
+        self.no_of_frames = 5
+        self.count = 0
+
+    def add_count(self):
+        self.count += 1
+        self.limit_count()
+
+    def limit_count(self):
+        if self.count > 50000:
+            self.count -= 50000
+
+    def skip_frame(self):
+        if self.count % 5 == 0:
+            return True
+        return False
+
+
+frame_manager1 = FrameManager()
+frame_manager2 = FrameManager()
+
+
 def gen():
     """Video streaming generator function."""
 
     # Read until video is completed
     while (cap1.isOpened()):
         # Capture frame-by-frame
-        ret, img = cap1.read()
-        if ret == True:
+        ret = cap1.grab()
+        frame_manager1.add_count()
+        if frame_manager1.skip_frame() and (ret == True):
+            ret, img = cap1.retrieve()
             img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            time.sleep(skip_frames)
+            time.sleep(loop_time)
         else:
             break
 
@@ -132,15 +157,17 @@ def gen1():
     # Read until video is completed
     while (cap2.isOpened()):
         # Capture frame-by-frame
-        ret, img = cap2.read()
-        if ret == True:
+        ret = cap2.grab()
+        frame_manager2.add_count()
+        if frame_manager2.skip_frame() and (ret == True):
+            ret, img = cap2.retrieve()
             img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
             img, display, faces = AnalyzeFrame().age_gender_detector(img)
             # add_data(*display['gender']+display['age'])
             data_input.add(display['gender']+display['age'])
             frame = cv2.imencode('.jpg', img)[1].tobytes()
             yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            time.sleep(skip_frames)
+            time.sleep(loop_time)
         else:
             break
 
