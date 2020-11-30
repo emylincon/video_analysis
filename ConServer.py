@@ -38,7 +38,8 @@ class Detected(db.Model):
 
 class DetectedSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'datetime', 'male', 'female', 'infant', 'baby', 'child', 'teen', 'young', 'adult', 'middle', 'senior')
+        fields = ('id', 'datetime', 'male', 'female', 'infant', 'baby', 'child', 'teen',
+                  'young', 'adult', 'middle', 'senior')
 
 
 detected_schema = DetectedSchema()
@@ -129,7 +130,7 @@ class FrameManager:
 
 
 frame_manager1 = FrameManager()
-frame_manager2 = FrameManager(no=15)
+frame_manager2 = FrameManager(no=13)
 
 
 def gen():
