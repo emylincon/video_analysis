@@ -140,14 +140,15 @@ def gen():
         # Capture frame-by-frame
         ret = cap1.grab()
         frame_manager1.add_count()
-        if frame_manager1.skip_frame() and (ret == True):
-            ret, img = cap1.retrieve()
-            img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
-            frame = cv2.imencode('.jpg', img)[1].tobytes()
-            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            time.sleep(loop_time)
-        else:
-            break
+        if frame_manager1.skip_frame():
+            if ret:
+                ret, img = cap1.retrieve()
+                img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
+                frame = cv2.imencode('.jpg', img)[1].tobytes()
+                yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+                time.sleep(loop_time)
+            else:
+                break
 
 
 def gen1():
@@ -159,17 +160,18 @@ def gen1():
         # Capture frame-by-frame
         ret = cap2.grab()
         frame_manager2.add_count()
-        if frame_manager2.skip_frame() and (ret == True):
-            ret, img = cap2.retrieve()
-            img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
-            img, display, faces = AnalyzeFrame().age_gender_detector(img)
-            # add_data(*display['gender']+display['age'])
-            data_input.add(display['gender']+display['age'])
-            frame = cv2.imencode('.jpg', img)[1].tobytes()
-            yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-            time.sleep(loop_time)
-        else:
-            break
+        if frame_manager2.skip_frame():
+            if ret:
+                ret, img = cap2.retrieve()
+                img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
+                img, display, faces = AnalyzeFrame().age_gender_detector(img)
+                # add_data(*display['gender']+display['age'])
+                data_input.add(display['gender']+display['age'])
+                frame = cv2.imencode('.jpg', img)[1].tobytes()
+                yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+                time.sleep(loop_time)
+            else:
+                break
 
 
 @app.route('/video_feed')
