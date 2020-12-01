@@ -86,8 +86,10 @@ header {
 .vid{
     border: 1px solid white;
     border-radius: 5px;
-    width: 70%;
-    margin-left: 15%;
+    height: 88%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     /*margin: 0 auto;*/
 
 }
