@@ -4,6 +4,15 @@
 ## PROJECT UNDER CONSTRUCTION...
 * [put ip camera on python and vlc](https://www.youtube.com/watch?v=6wI6tzRogZQ&ab_channel=YahiyaMulla)
 
+## OpenCV Package source
+[link](https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv)
+
+## Dataset to explore
+* Retail dataset with customer transactions. including gender DOB and purchased item [link](https://www.kaggle.com/amark720/retail-shop-case-study-dataset?select=prod_cat_info.csv)
+
+## Example application/cas study
+* [link](https://www.dayta.ai/?utm_source=adwords&hsa_tgt=kwd-390491134921&hsa_kw=retailer+data&hsa_cam=10489248856&gclid=Cj0KCQiAtqL-BRC0ARIsAF4K3WFf3zYj4SViGnIY9jlvlXNkLsvmmSnPUkjQ6xRMXiCfIDfX3P1r1FgaAgmcEALw_wcB&hsa_mt=e&utm_campaign=FP%2BUK%2BGEN%2BRETAIL&hsa_src=g&hsa_acc=8686969890&hsa_net=adwords&hsa_grp=106819385227&hsa_ad=464592778064&utm_medium=ppc&utm_term=retailer+data&hsa_ver=3)
+
 ### DATA SOURCES
 * [US data](https://data.gov.com/)
 * [UK data](https://data.gov.uk/)
