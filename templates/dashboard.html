@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
     <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
     <title>VidSense</title>
@@ -29,7 +30,7 @@
         <div class="sub_main pad">
             <div class="video">
                 <div class="sub_title">Original Stream</div>
-                    <img class="vid" src="{{ url_for('video_feed') }}">
+<!--                    <img class="vid" src="{{ url_for('video_feed') }}">-->
 
             </div>
             <div class="video">
@@ -39,9 +40,22 @@
         </div>
         <div class="sub_main">
             <div id="advert">
-                <div class="sub_title">Advert Board</div>
-                <div id="loading">
-                    <div id="ring" class="ring">LOADING<div class='ringer'></div></div>
+                <div class="row">
+                    <div class="sub_title">Advert Board [<a href="https://www.kaggle.com/amark720/retail-shop-case-study-dataset"><span>Retail Dataset</span></a>]</div>
+                    <div id="predicted" class="lit-text">Predicted</div>
+                    <div id="room" class="not-lit">Room Analysis</div>
+                    <div class="sub_title" style="color: white">00:<span id="counter">20</span>s</div>
+                </div>
+
+                <div class="main-pod">
+                    <div class="group-pod">
+                        <div id="pod1" class="pod"></div>
+                        <div id="pod2" class="pod"></div>
+                    </div>
+                    <div class="group-pod">
+                        <div id="pod3" class="pod"></div>
+                        <div id="pod4" class="pod"></div>
+                    </div>
                 </div>
 
             </div>
