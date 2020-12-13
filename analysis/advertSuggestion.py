@@ -9,10 +9,11 @@ class Suggestion:
         if local == 1:
             a = open('advert_data.json', 'r')
         else:
-            a = open('analysis/data.json', 'r')
+            a = open('analysis/advert_data.json', 'r')
         self.data = json.load(a)
         a.close()
         self.total = {'male': {'cat': {}, 'subcat': {}}, 'female': {'cat': {}, 'subcat': {} }}
+        self.image_base = 'static/bank_image'
         self.cal_total()
 
     def cal_total(self):
@@ -42,10 +43,14 @@ class Suggestion:
         cat_dict, sub_dict, total, sub_total = self.initialize(age, gender)
 
         for i in self.top(sub_dict):
-            items.append({'gender': gender, 'item': i, 'age': self.format_age(age), 'percent': self.get_percentage(sub_dict[i], sub_total)})
+            items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
+                          'image': f'{self.image_base}/home_kitchen.jpg',
+                          'percent': self.get_percentage(sub_dict[i], sub_total)})
 
         for i in self.top(cat_dict):
-            items.append({'gender': gender, 'item': i, 'age': self.format_age(age), 'percent': self.get_percentage(cat_dict[i], total)})
+            items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
+                          'image': f'{self.image_base}/home_kitchen.jpg',
+                          'percent': self.get_percentage(cat_dict[i], total)})
 
         return items
 
@@ -57,10 +62,12 @@ class Suggestion:
         cat_dict, sub_dict, total, sub_total = self.initialize(age, gender)
         for i in self.rand_select(list(sub_dict)):
             items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
+                          'image': f'{self.image_base}/home_kitchen.jpg',
                           'percent': self.get_percentage(sub_dict[i], sub_total)})
 
         for i in self.rand_select(list(cat_dict)):
             items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
+                          'image': f'{self.image_base}/home_kitchen.jpg',
                           'percent': self.get_percentage(cat_dict[i], total)})
 
         return items
