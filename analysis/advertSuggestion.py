@@ -44,12 +44,12 @@ class Suggestion:
 
         for i in self.top(sub_dict):
             items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
-                          'image': f'{self.image_base}/home_kitchen.jpg',
+                          'image': f'{self.image_base}/{i}.jpg',
                           'percent': self.get_percentage(sub_dict[i], sub_total)})
 
         for i in self.top(cat_dict):
             items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
-                          'image': f'{self.image_base}/home_kitchen.jpg',
+                          'image': f'{self.image_base}/{i}.jpg',
                           'percent': self.get_percentage(cat_dict[i], total)})
 
         return items
@@ -62,12 +62,12 @@ class Suggestion:
         cat_dict, sub_dict, total, sub_total = self.initialize(age, gender)
         for i in self.rand_select(list(sub_dict)):
             items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
-                          'image': f'{self.image_base}/home_kitchen.jpg',
+                          'image': f'{self.image_base}/{i}.jpg',
                           'percent': self.get_percentage(sub_dict[i], sub_total)})
 
         for i in self.rand_select(list(cat_dict)):
             items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
-                          'image': f'{self.image_base}/home_kitchen.jpg',
+                          'image': f'{self.image_base}/{i}.jpg',
                           'percent': self.get_percentage(cat_dict[i], total)})
 
         return items
