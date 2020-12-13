@@ -6,11 +6,14 @@ from sqlalchemy import Column, Integer, String, Float
 from flask_marshmallow import Marshmallow
 import os
 from analysis.ageGender import AnalyzeFrame
+from analysis.advertSuggestion import Suggestion
+from analysis.TimeSeries import TimeSeriesPredict
 from datetime import datetime as dt
 
 app = Flask(__name__)
-cap1 = cv2.VideoCapture('rtsp://ubnt:ubnt@10.1.2.111/s2')
-cap2 = cv2.VideoCapture('rtsp://ubnt:ubnt@10.1.2.123/s2')
+# cap1 = cv2.VideoCapture('rtsp://ubnt:ubnt@10.1.2.111/s2')
+# cap2 = cv2.VideoCapture('rtsp://ubnt:ubnt@10.1.2.123/s2')
+cap1 = cap2 = cv2.VideoCapture(0)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.db')
 db = SQLAlchemy(app)
@@ -18,6 +21,8 @@ ma = Marshmallow(app)
 display = {'gender': [0] * 2, 'age': [0] * 8}
 faces = 0
 loop_time = 0.1
+advert_suggestion = Suggestion(local=0)
+predictor = TimeSeriesPredict(local=0)
 
 
 # database models
@@ -85,9 +90,16 @@ def add_data(male, female, infant, baby, child, teen, young, adult, middle, seni
 
 
 class DataInput:
-    def __init__(self):
+    def __init__(self, seconds=20):
+        self.seconds = seconds
         self.start = time.time()
         self.compare = {}
+        self.times = round(60/self.seconds)
+        self.vector = (0,)*10
+        self.last = (0,)*10
+
+    def set_times(self):
+        self.times = round(60/self.seconds)
 
     def add(self, data):
         data = tuple(data)
@@ -96,10 +108,22 @@ class DataInput:
                 self.compare[data] += 1
             else:
                 self.compare[data] = 0
-            if (time.time() - self.start) > 60:
+            if self.times <= 0:
                 add_data(*max(self.compare, key=self.compare.get))
-                self.start = time.time()
+                self.set_times()
                 self.compare = {}
+        elif self.times <= 0:
+            if len(self.compare) > 0:
+                add_data(*max(self.compare, key=self.compare.get))
+            self.set_times()
+            self.compare = {}
+        if (time.time() - self.start) > self.seconds:
+            try:
+                self.vector = max(self.compare, key=self.compare.get)
+            except ValueError:
+                self.vector = (0,) * 10
+            self.times -= 1
+            self.start = time.time()
 
 
 data_input = DataInput()
@@ -200,5 +224,27 @@ def get_stat():
     return jsonify({**display, 'faces': faces}), 200
 
 
+@app.route('/get_advert')
+def get_advert():
+    is_predicted = 0
+    vector = data_input.vector
+    if vector == (0,)*10:
+        is_predicted = 1
+        vector = predictor.get_output(data_input.last)
+        print('predicted!!')
+    else:
+        print('not predicted!')
+    data_input.last = vector
+    sex = ['male', 'female']
+    age_group = ['(0, 3)', '(4, 7)', '(8, 14)', '(15, 24)', '(25, 37)', '(38, 47)', '(48, 53)', '(60, 100)']
+    gender_list, age_list = vector[:2], vector[2:]
+    gender_max, age_max = max(gender_list), max(age_list)
+    gender, age = sex[gender_list.index(gender_max)], age_group[age_list.index(age_max)]
+
+    advert = advert_suggestion.suggest_random(age=age, gender=gender)
+    return jsonify({'advert': advert, 'is_predicted': is_predicted}), 200
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    # app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
