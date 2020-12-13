@@ -84,6 +84,112 @@ var myAge = new Chart(ctx1, {
     }
 });
 
+var advert_count = 20;
+
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
+const predicted = document.querySelector('#predicted');
+const room = document.querySelector('#room');
+
+function update_predicted(no){
+    if(no === 1){
+        predicted.classList.add('lit-text');
+        predicted.classList.remove('not-lit');
+        room.classList.add('not-lit');
+        room.classList.remove('lit-text');
+    }
+    else{
+        predicted.classList.remove('lit-text');
+        predicted.classList.add('not-lit');
+        room.classList.remove('not-lit');
+        room.classList.add('lit-text');
+    }
+}
+
+async function update_advert(){
+    const res = await fetch('/get_advert');
+    const advert = await res.json();
+    update_predicted(advert.is_predicted);
+    disappear();
+    setTimeout(function (){
+        appear(advert.advert);
+    }, 1000);
+}
+
+function advert_counter(){
+    let counter = document.querySelector('#counter');
+    advert_count -= 1;
+    counter.innerHTML = pad(advert_count, 2);
+    if(advert_count === 0){
+        update_advert();
+        advert_count = 20;
+    }
+}
+
+function disappear(){
+    let nodes = document.querySelectorAll('.pod');
+    for(let i = 0; i<nodes.length; i++){
+        nodes[i].classList.add('disappear');
+    }
+
+    setTimeout(function(){
+        for(let i = 0; i<nodes.length; i++){
+            nodes[i].remove();
+        }
+        let group_node = document.querySelectorAll('.group-pod');
+        group_node[0].remove();
+        group_node[1].remove();
+    }, 1000)
+}
+
+function create_pod(age, gender, item, image, percent){
+    let sex = {'male': '<i class="fas fa-male" style="color: rgb(66, 66, 228);"></i>', 'female': '<i class="fas fa-female" style="color: rgb(228, 66, 206);"></i>'}
+    let node = document.createElement('div');
+    node.classList.add('pod');
+    node.classList.add('pod_image_create');
+    node.innerHTML = `
+    <div class="pod-in">
+    <br>
+    <div class="text1">${percent}% ${sex[gender]}</div>
+    <div class="text3">Aged ${age}</div>
+    <div class="text2">are likely to purchase</div>
+    <div class="text3">${item}</div>
+</div>
+    `;
+    node.style.backgroundImage = `url('${image}')`;
+    console.log(node.style.backgroundImage);
+    return node;
+}
+
+function create_group_pod(){
+    let group_node = [];
+    for(let i=0; i<2; i++){
+        let node = document.createElement('div');
+        node.classList.add('group-pod');
+        group_node.push(node);
+    }
+    return group_node;
+}
+
+function appear(data){
+    let main_pod = document.querySelector('.main-pod');
+    let group_node = create_group_pod();
+
+    let alt = 0;
+    for(let i=0; i< 4; i++){
+        group_node[alt].appendChild(create_pod(age=data[i].age, gender=data[i].gender,
+            item=data[i].item, image=data[i].image, percent=data[i].percent));
+        alt = alt^1;
+    }
+    for(let i=0; i<2; i++){
+        main_pod.appendChild(group_node[i]);
+    }
+}
+
 function timeCount(){
     var now = new Date().getTime();
     var myCount =  now - start;
@@ -110,6 +216,7 @@ function update(){
     update_stat();
     myAge.update();
     myGender.update();
+    advert_counter();
 }
 
 setInterval(update, 1000);
