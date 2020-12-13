@@ -1,11 +1,15 @@
 import json
 import random as r
 import collections
+import ast
 
 
 class Suggestion:
-    def __init__(self):
-        a = open('data.json', 'r')
+    def __init__(self, local=1):
+        if local == 1:
+            a = open('advert_data.json', 'r')
+        else:
+            a = open('analysis/data.json', 'r')
         self.data = json.load(a)
         a.close()
         self.total = {'male': {'cat': {}, 'subcat': {}}, 'female': {'cat': {}, 'subcat': {} }}
@@ -26,26 +30,38 @@ class Suggestion:
 
         return cat_dict, sub_dict, total, sub_total
 
+    @staticmethod
+    def format_age(age):
+        age = ast.literal_eval(age)
+        return f'{age[0]}-{age[1]}'
+
     def suggest_top(self, age, gender):
+        if age not in ['(15, 24)', '(25, 37)', '(38, 47)']:
+            age = r.choice(['(15, 24)', '(25, 37)', '(38, 47)'])
         items = []  # gender, percentage, item, age
         cat_dict, sub_dict, total, sub_total = self.initialize(age, gender)
+
         for i in self.top(sub_dict):
-            items.append({'gender': gender, 'item': i, 'age': age, 'percent': self.get_percentage(sub_dict[i], sub_total)})
+            items.append({'gender': gender, 'item': i, 'age': self.format_age(age), 'percent': self.get_percentage(sub_dict[i], sub_total)})
 
         for i in self.top(cat_dict):
-            items.append({'gender': gender, 'item': i, 'age': age, 'percent': self.get_percentage(cat_dict[i], total)})
+            items.append({'gender': gender, 'item': i, 'age': self.format_age(age), 'percent': self.get_percentage(cat_dict[i], total)})
 
         return items
 
     def suggest_random(self, age, gender):
+        if age not in ['(15, 24)', '(25, 37)', '(38, 47)']:
+            age = r.choice(['(15, 24)', '(25, 37)', '(38, 47)'])
         items = []  # gender, percentage, item, age
 
         cat_dict, sub_dict, total, sub_total = self.initialize(age, gender)
         for i in self.rand_select(list(sub_dict)):
-            items.append({'gender': gender, 'item': i, 'age': age, 'percent': self.get_percentage(sub_dict[i], sub_total)})
+            items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
+                          'percent': self.get_percentage(sub_dict[i], sub_total)})
 
         for i in self.rand_select(list(cat_dict)):
-            items.append({'gender': gender, 'item': i, 'age': age, 'percent': self.get_percentage(cat_dict[i], total)})
+            items.append({'gender': gender, 'item': i, 'age': self.format_age(age),
+                          'percent': self.get_percentage(cat_dict[i], total)})
 
         return items
 
