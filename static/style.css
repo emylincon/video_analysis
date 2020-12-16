@@ -10,11 +10,23 @@
 body{
     background-color: #24252A;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 html, body{
     height: 100%;
 }
-
+#loader{
+    width: 100%;
+    height: 100vh;
+    background: black url("images/loader.gif") no-repeat center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 60px;
+    font-weight: 400;
+    transition: display 1s ease-out;
+}
 li, a, button {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
@@ -82,11 +94,13 @@ header {
 .video{
     border: 1px solid white;
     border-radius: 5px;
-    height: 49%;
+    /*height: 49%;*/
+    height: 100%;
 }
 .vid{
     border: 1px solid white;
     border-radius: 5px;
+    width: 90%;
     height: 88%;
     display: block;
     margin-left: auto;
@@ -274,6 +288,40 @@ header {
 
 
 }
+
+.progress{
+    background: rgb(65, 64, 64);
+    border: 2px solid white;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 5px;
+    height: 20px;
+    padding: 5px;
+}
+/*.probar{*/
+/*    background: white;*/
+/*    margin: -4.5px;*/
+/*    height: 15px;*/
+/*    width: 15px;*/
+/*    border-radius: 50%;*/
+/*    top: 100%;*/
+/*    animation: move 2s ease-in-out infinite alternate-reverse;*/
+/*}*/
+
+ .progress .probar {
+	 background: linear-gradient(45deg, rgba(255, 255, 255, .5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .5) 50%, rgba(255, 255, 255, .5) 75%, transparent 75%, transparent);
+	 background-size: 20px;
+	 border-radius: 5px;
+     background-color: #005c80;
+	 height: 100%;
+	 animation: move 0.5s linear infinite;
+}
+ @keyframes move {
+	 100% {
+		 background-position: 20px 0;
+	}
+}
+
 .sub_title{
     /* color: white; */
     margin: 0 auto;
@@ -304,37 +352,58 @@ header {
 }
 #time{
     width: 170px;
-    height: 170px;
-    /* float: left; */
-    border-radius: 50%;
-    /* margin-top: 50px; */
+    height: 120px;
+    border-radius: 10px;
     line-height: 30px;
     text-align: center;
     text-shadow: 2px 2px 4px #000000;
     color: white;
     margin: 15% auto;
-    /* margin-left: 10.5%; */
-    /* border: 1px solid white; */
-    /* margin-right: 10%; */
     font-size: 18px;
-
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    animation: cross 1s ease-in-out infinite alternate;
 }
-#time:before {
-    content: '';
-    position: absolute;
-    top:-3px;
-    left:-3px;
-    width: 170px;
-    height: 170px;
-    margin-top: 505px;
-    margin-left: 54%;
-    border: 3px solid transparent;
-    border-top:3px solid white;
-    border-right:3px solid #0088a9;
-    border-radius: 50%;
-    animation: animateCircle 3s linear infinite;
-
+@keyframes cross{
+    0%{
+        border-top: 3px solid white;
+        border-bottom: 3px solid #0088a9;
+    }
+    100%{
+        border-right: 3px solid white;
+        border-left: 3px solid #0088a9;
+    }
 }
+/*#time{*/
+/*    width: 170px;*/
+/*    height: 170px;*/
+/*    border-radius: 50%;*/
+/*    line-height: 30px;*/
+/*    text-align: center;*/
+/*    text-shadow: 2px 2px 4px #000000;*/
+/*    color: white;*/
+/*    margin: 15% auto;*/
+/*    font-size: 18px;*/
+
+/*}*/
+/*#time:before {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top:-3px;*/
+/*    left:-3px;*/
+/*    width: 170px;*/
+/*    height: 170px;*/
+/*    margin-top: 505px;*/
+/*    margin-left: 54%;*/
+/*    border: 3px solid transparent;*/
+/*    border-top:3px solid white;*/
+/*    border-right:3px solid #0088a9;*/
+/*    border-radius: 50%;*/
+/*    animation: animateCircle 3s linear infinite;*/
+
+/*}*/
 @keyframes animateCircle {
     0%{
         transform: rotate(0deg);
@@ -348,7 +417,7 @@ header {
     height: 20%;
     width: 95%;
     margin-left: 2.5%;
-    margin-top: -60px;
+    /*margin-top: -60px;*/
     display: flex;
     border-radius: 3%;
     color: white;
