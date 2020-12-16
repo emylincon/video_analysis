@@ -1,11 +1,11 @@
 const start = new Date("Nov 19, 2020 12:00:00").getTime();
 const myVid = document.querySelector('.vid');
 const loader = document.querySelector('#loader');
-const notTime = document.querySelector('.not-time');
+// const notTime = document.querySelector('.not-time');
 function loaderComplete(){
     console.log('loaded');
     loader.style.display = 'none';
-    notTime.id = 'time';
+    // notTime.id = 'time';
 }
 
 // myVid.onload = loaderComplete();
@@ -95,6 +95,35 @@ var myAge = new Chart(ctx1, {
         }
     }
 });
+var plane = 0;
+const myPlane = document.querySelector('.plane');
+const planeBtn = document.querySelector('button');
+
+async function update_plane(){
+    const res1 = await fetch('/get_frames');
+    const frames = await res1.json();
+    let node = "<h1 style=\"color: white;\">Frames</h1>";
+    if(frames.images.length > 0){
+        console.log('frames='+frames.images);
+        for(let i = 0; i < frames.images.length;i++){
+            node += `<img class="snap" src="${frames.images[i]}">`;
+        }
+    }
+
+    myPlane.innerHTML = node;
+}
+function plane_manager(){
+    plane = plane^1;
+    if(plane === 0){
+        myPlane.style.display = 'none';
+        planeBtn.innerText = 'Show Frames';
+    }
+    else{
+        update_plane();
+        myPlane.style.display = 'flex';
+        planeBtn.innerText = 'Hide Frames';
+    }
+}
 
 var advert_count = 20;
 
