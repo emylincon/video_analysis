@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
+    <title>VidSense</title>
+</head>
+<body>
+    <div id="loader"><span>Loading...</span></div>
+    <header>
+        <img class='logo'  src="{{ url_for('static', filename='images/logo.png') }}" alt='Logo'>
+
+        <nav>
+            <ul class='nav__links'>
+                <li class="active">CAM 1</li>
+                <li><a href="#">CAM 2</a></li>
+                <li><a href="#">CAM 3</a></li>
+            </ul>
+        </nav>
+
+
+    </header>
+
+    <div id='main'>
+        <div class="sub_main pad">
+            <div class="video">
+                <div class="sub_title">Analysed Stream</div>
+                    <img class="vid" src="{{ url_for('video_analytics') }}">
+                    <div class="progress">
+                        <div class="probar"></div>
+                    </div>
+            </div>
+        </div>
+        <div class="sub_main">
+            <div id="advert">
+                <div class="row">
+                    <div class="sub_title">Advert Board [<a href="https://www.kaggle.com/amark720/retail-shop-case-study-dataset"><span>Retail Dataset</span></a>]</div>
+                    <div id="predicted" class="lit-text">Predicted</div>
+                    <div id="room" class="not-lit">Room Analysis</div>
+                    <div class="sub_title" style="color: white">00:<span id="counter">20</span>s</div>
+                </div>
+
+                <div class="main-pod">
+                    <div class="group-pod">
+                        <div id="pod1" class="pod">
+                            <div class="pod-in">
+                                <br>
+                                <div class="text1">33% <i class="fas fa-male" style="color: rgb(66, 66, 228);"></i></div>
+                                <div class="text3">Aged 25-30</div>
+                                <div class="text2">are likely to purchase</div>
+
+                                <div class="text3">Home and Kitchen Utensils</div>
+                            </div>
+                        </div>
+                        <div id="pod2" class="pod">
+                            <div class="pod-in">
+                                <br>
+                                <div class="text1">33% <i class="fas fa-male" style="color: rgb(66, 66, 228);"></i></div>
+                                <div class="text3">Aged 25-30</div>
+                                <div class="text2">are likely to purchase</div>
+
+                                <div class="text3">Home and Kitchen Utensils</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-pod">
+                        <div id="pod3" class="pod">
+                            <div class="pod-in">
+                                <br>
+                                <div class="text1">33% <i class="fas fa-female" style="color: rgb(66, 66, 228);"></i></div>
+                                <div class="text3">Aged 25-30</div>
+                                <div class="text2">are likely to purchase</div>
+
+                                <div class="text3">Home and Kitchen Utensils</div>
+                            </div>
+                        </div>
+                        <div id="pod4" class="pod">
+                            <div class="pod-in">
+                                <br>
+                                <div class="text1">33% <i class="fas fa-female" style="color: rgb(66, 66, 228);"></i></div>
+                                <div class="text3">Aged 25-30</div>
+                                <div class="text2">are likely to purchase</div>
+
+                                <div class="text3">Home and Kitchen Utensils</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="stat">
+                <div class="sub_title">Frame Statistics</div>
+                <div class="stat_board">
+                    <div class="sub_stat" id="stat_circle">
+                        <div class="not-time"></div>
+                        <div id="people">
+                            <span class="material-icons" id="p-face">
+                                face
+                                </span>
+                            <span id="p-no">1 Faces</span>
+                        </div>
+                    </div>
+                    <div class="sub_stat" id="stat_bar">
+                        <div class="bar">
+                            <div>
+                                <canvas id="gender" height="68"></canvas>
+                            </div>
+                        </div>
+                        <div class="bar">
+                            <div >
+                                <canvas id="age" height="68"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <img src="{{ url_for('static', filename='images/footer-img.jpeg') }}" id="face"/>
+        <br>
+        Designed by Emeka Ugwuanyi
+        <p>
+            <a href="https://github.com/emylincon"><i class="fa fa-github"></i></a>
+                  &nbsp;
+        <a href="https://www.linkedin.com/in/emeka-ugwuanyi-259089121/"><i class="fa fa-linkedin"></i></a>
+        </p>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
