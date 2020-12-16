@@ -1,4 +1,16 @@
 const start = new Date("Nov 19, 2020 12:00:00").getTime();
+const myVid = document.querySelector('.vid');
+const loader = document.querySelector('#loader');
+const notTime = document.querySelector('.not-time');
+function loaderComplete(){
+    console.log('loaded');
+    loader.style.display = 'none';
+    notTime.id = 'time';
+}
+
+// myVid.onload = loaderComplete();
+setTimeout(loaderComplete, 20000);
+
 Chart.defaults.global.defaultFontColor = 'white';
 
 var ctx = document.getElementById('gender').getContext('2d');
@@ -10,12 +22,12 @@ var myGender = new Chart(ctx, {
             label: '# of Gender Detected',
             data: [1,1],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
             ],
             borderWidth: 1
         }]
@@ -198,7 +210,7 @@ function timeCount(){
     var minutes = Math.floor((myCount  % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((myCount  % (1000 * 60)) / 1000);
 
-    document.getElementById("time").innerHTML = "<span style='color:#0088a9;'>RUNTIME</span><br><span>" + days + "d " + hours + "h "
+    document.getElementById("time").innerHTML = "<span style='color:#0088a9;'>RUNTIME</span><span>" + days + "d " + hours + "h "
   + minutes + "m " + seconds + "s </span>";
 }
 
