@@ -169,6 +169,7 @@ header {
     text-align: center;
     color: white;
     overflow: hidden;
+    background-image: url("bank_image/home_kitchen.jpg");
 }
 
 .pod-in{
@@ -412,6 +413,49 @@ header {
         transform: rotate(360deg);
     }
 }
+
+.plane{
+    width: 20%;
+    height: 100%;
+    position: absolute;
+    background: rgba(7, 7, 7, 0.5);
+    display: none;
+    flex-direction: column;
+    overflow: auto;
+    align-items: center;
+    animation: planeIn 1s linear;
+    /* justify-content: space-around; */
+
+}
+@keyframes planeIn{
+    0%{
+        width: 0;
+    }
+    100%{
+        width: 20%;
+    }
+}
+.snap{
+    border-radius: 10px;
+    border: 1px solid white;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: rgba(0,136,169,1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover{
+    background-color: rgba(0,136,169,0.8);
+}
+
 #people{
     border:2px solid #0088a9;
     height: 20%;
