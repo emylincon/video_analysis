@@ -131,13 +131,21 @@ data_input = DataInput()
 
 @app.route('/')
 def home():
-    return render_template('dashboard.html')
+    return render_template('dashboard2.html')
 
 
 class FrameManager:
-    def __init__(self, no=5):
+    def __init__(self, no=5, frame_limit=10):
         self.no_of_frames = no
         self.count = 0
+        self.frame_folder = 'static/frames'
+        self.frame_limit = frame_limit
+        self.frames = []
+        self.clean_up()
+
+    def clean_up(self):
+        for file in os.listdir(self.frame_folder):
+            os.remove(f'{self.frame_folder}/{file}')
 
     def add_count(self):
         self.count += 1
@@ -151,6 +159,22 @@ class FrameManager:
         if self.count % self.no_of_frames == 0:
             return True
         return False
+
+    def save_frame(self, frame):
+        name = f'{self.frame_folder}/{round(time.time())}.jpg'
+        cv2.imwrite(name, frame)
+        return name
+
+    def remove_frame(self):
+        try:
+            os.remove(f'{self.frames.pop(0)}')
+        except FileNotFoundError:
+            pass
+
+    def add_frame(self, frame):
+        self.frames.append(self.save_frame(frame))
+        if len(self.frames) > self.frame_limit:
+            self.remove_frame()
 
 
 frame_manager1 = FrameManager()
@@ -188,9 +212,10 @@ def gen1():
         if frame_manager2.skip_frame():
             if ret:
                 ret, img = cap2.retrieve()
-                img = cv2.resize(img, (0, 0), fx=1, fy=0.6)
+                img = cv2.resize(img, (0, 0), fx=1, fy=1)
                 img, display, faces = AnalyzeFrame().age_gender_detector(img)
                 # add_data(*display['gender']+display['age'])
+                frame_manager2.add_frame(img)
                 data_input.add(display['gender']+display['age'])
                 frame = cv2.imencode('.jpg', img)[1].tobytes()
                 yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
@@ -231,9 +256,7 @@ def get_advert():
     if vector == (0,)*10:
         is_predicted = 1
         vector = predictor.get_output(data_input.last)
-        print('predicted!!')
-    else:
-        print('not predicted!')
+
     data_input.last = vector
     sex = ['male', 'female']
     age_group = ['(0, 3)', '(4, 7)', '(8, 14)', '(15, 24)', '(25, 37)', '(38, 47)', '(48, 53)', '(60, 100)']
@@ -243,6 +266,12 @@ def get_advert():
 
     advert = advert_suggestion.suggest_random(age=age, gender=gender)
     return jsonify({'advert': advert, 'is_predicted': is_predicted}), 200
+
+
+@app.route('/get_frames')
+def get_frames():
+    frames = frame_manager2.frames
+    return jsonify({'images': frames}), 200
 
 
 if __name__ == '__main__':
