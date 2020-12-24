@@ -12,6 +12,7 @@
     <title>VidSense</title>
 </head>
 <body>
+    <div id="loader"><span>Loading...</span></div>
     <header>
         <img class='logo'  src="{{ url_for('static', filename='images/logo.png') }}" alt='Logo'>
 
@@ -63,7 +64,7 @@
                 <div class="sub_title">Frame Statistics</div>
                 <div class="stat_board">
                     <div class="sub_stat" id="stat_circle">
-                        <div id='time'></div>
+                        <div class="not-time"></div>
                         <div id="people">
                             <span class="material-icons" id="p-face">
                                 face
