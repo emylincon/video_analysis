@@ -28,3 +28,6 @@
 * [correlate](https://www.google.com/trends/correlate)
 * [stock market data](https://uk.finance.yahoo.com/)
 * [open source](https://www.kaggle.com/)
+
+### Haarcascades Repo
+[link for Repo](https://github.com/opencv/opencv/tree/master/data/haarcascades)
