@@ -31,3 +31,8 @@
 
 ### Haarcascades Repo
 [link for Repo](https://github.com/opencv/opencv/tree/master/data/haarcascades)
+
+## Tensorflow Object detection API to try out
+* [object detection API](https://github.com/tensorflow/models/tree/master/research/object_detection)
+* [tutorial](https://www.youtube.com/watch?v=COlbP62-B-U&ab_channel=sentdex)
+* [image gender & age classification dataset and model notebook](https://www.kaggle.com/thanaphatj/gender-classification-of-facial-images-cnn)
