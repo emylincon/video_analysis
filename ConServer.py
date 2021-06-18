@@ -178,7 +178,7 @@ class FrameManager:
 
 
 frame_manager1 = FrameManager()
-frame_manager2 = FrameManager(no=13)
+frame_manager2 = FrameManager(no=8)
 
 
 def gen():
@@ -222,6 +222,14 @@ def gen1():
                 time.sleep(loop_time)
             else:
                 break
+        # elif ret:
+        #     ret, img = cap1.retrieve()
+        #     img = cv2.resize(img, (0, 0), fx=1, fy=1)
+        #     frame = cv2.imencode('.jpg', img)[1].tobytes()
+        #     yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        #     time.sleep(loop_time)
+        # else:
+        #     break
 
 
 @app.route('/video_feed')
