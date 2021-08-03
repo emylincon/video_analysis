@@ -59,9 +59,12 @@ class FrameProcessing:
 while True:
     ret, frame = cap.read()
 
-    #frame = cv2.resize(frame, (0,0), fx=1, fy=1)
+    small, normal = 0.5, 2
+    frame_resized = cv2.resize(frame, (0,0), fx=small, fy=small)
     cv2.imshow("Original", frame)
-    cv2.imshow("Analytics", FrameProcessing(frame).run())
+    processed_frame = FrameProcessing(frame_resized).run()
+    frame_resized_back = cv2.resize(processed_frame, (0,0), fx=normal, fy=normal)
+    cv2.imshow("Analytics", frame_resized_back)
 
     ch = cv2.waitKey(1)
     if ch & 0xFF == ord('q'):
