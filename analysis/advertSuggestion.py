@@ -90,6 +90,6 @@ class Suggestion:
         return round((value/total)*100)
 
 
-# obj = Suggestion()
-#
-# print(obj.suggest_random('(15, 24)', 'male'))
+if __name__ == '__main__':
+    obj = Suggestion()
+    print(obj.suggest_random('(15, 24)', 'male'))

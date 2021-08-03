@@ -19,5 +19,7 @@ class TimeSeriesPredict:
         prediction = list(raw_prediction[0])
         return [round(i) for i in prediction]
 
-# a = TimeSeriesPredict().get_output([0] * 10)
-# print(a)
+
+if __name__ == '__main__':
+    a = TimeSeriesPredict().get_output([0] * 10)
+    print(a)
