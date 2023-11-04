@@ -1,6 +1,17 @@
 # Video Analytics Project for Smart Advertisement
 ![display](static/images/display.png)
 
+In this project, a video analytics framework
+for smart advertisement has been implemented. The proposed project has two major
+components. The video analytics component and the advert system component. The analytics framework includes an LSTM module which is used
+to perform a time-series prediction of the age group and gender
+that might be in a particular location when there is no face
+detection in a frame. The evaluation results of the module
+have shown that the model achieves a 99.99% accuracy on the
+validation dataset.
+
+![High level architecture](static/arch.png)
+
 ![DEMO](static/demo.gif)
 
 ## OpenCV Package source
@@ -10,7 +21,7 @@
 * Retail dataset with customer transactions. including gender DOB and purchased item [link](https://www.kaggle.com/amark720/retail-shop-case-study-dataset?select=prod_cat_info.csv)
 
 * https://support.google.com/merchants/answer/6324463?hl=en
-## Example application/cas study
+## Example application/case study
 * [Link for OpenCV](https://www.dayta.ai/?utm_source=adwords&hsa_tgt=kwd-390491134921&hsa_kw=retailer+data&hsa_cam=10489248856&gclid=Cj0KCQiAtqL-BRC0ARIsAF4K3WFf3zYj4SViGnIY9jlvlXNkLsvmmSnPUkjQ6xRMXiCfIDfX3P1r1FgaAgmcEALw_wcB&hsa_mt=e&utm_campaign=FP%2BUK%2BGEN%2BRETAIL&hsa_src=g&hsa_acc=8686969890&hsa_net=adwords&hsa_grp=106819385227&hsa_ad=464592778064&utm_medium=ppc&utm_term=retailer+data&hsa_ver=3)
 
 ### DATA SOURCES
